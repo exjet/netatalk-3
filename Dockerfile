@@ -30,6 +30,9 @@ RUN apt update && \
       checkinstall && \ 
       apt clean && \
     mkdir -p /netatalk && \
+    mkdir -p /usr/local/etc/afpconf && \
+    touch /usr/local/etc/afpconf/afp.conf && \
+    ln -s /usr/local/etc/afpconf/afp.conf /usr/local/etc/afp.conf && \
     mkdir /Volumes && \
     NETATALK_VERSION="3.1.8" && \
     cd /netatalk && \
@@ -50,5 +53,5 @@ RUN apt update && \
         rm -rf /netatalk
 
 EXPOSE 548 636 5353/udp
-COPY afp.conf /usr/local/etc/afp.conf
+
 CMD ["/usr/local/sbin/afpd", "-d"]
