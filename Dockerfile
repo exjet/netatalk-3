@@ -4,6 +4,7 @@ MAINTAINER ExPrime <executorj@gmail.com>
 RUN apt update && \
     apt install -y \
       git \
+      ldap-auth-client \
       build-essential \
       libevent-dev \
       libssl-dev \
