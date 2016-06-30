@@ -1,8 +1,8 @@
 FROM ubuntu:16.04
 MAINTAINER ExPrime <executorj@gmail.com>
 
-RUN apt update && \
-    apt install -y \
+RUN apt-get update && \
+    apt-get install -qq \
       git \
       ldap-auth-client \
       build-essential \
