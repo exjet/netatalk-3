@@ -73,6 +73,13 @@ RUN set -x && \
       apt-get clean && \
     mkdir -p /netatalk && \
     mkdir -p /usr/local/etc/afpconf && \
+    mkdir -p /etc/hostetc && \
+    touch /etc/hostetc/nsswitch.conf && \
+    touch /etc/hostetc/ldap.conf && \
+    rm /etc/nsswitch.conf && \
+    rm /etc/ldap.conf && \
+    ln -s /etc/hostetc/ldap.conf /etc/ldap.conf && \
+    ln -s /etc/hostetc/nsswitch.conf  /etc/nsswitch.conf && \
     touch /usr/local/etc/afpconf/afp.conf && \
     ln -s /usr/local/etc/afpconf/afp.conf /usr/local/etc/afp.conf && \
     mkdir /Volumes && \
