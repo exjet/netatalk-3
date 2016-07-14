@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 MAINTAINER ExPrime <executorj@gmail.com>
-
+COPY netatalk-3.1.8.tar.gz /netatalk/
 RUN set -x && \
      DEBIAN_FRONTEND="noninteractive" && \
     echo -e " \
@@ -71,8 +71,8 @@ RUN set -x && \
       wget \
       checkinstall && \ 
       apt-get clean && \
-    mkdir -p /netatalk && \
-    mkdir -p /usr/local/etc/afpconf && \
+   
+   
     mkdir -p /etc/hostetc && \
     touch /etc/hostetc/nsswitch.conf && \
     touch /etc/hostetc/ldap.conf && \
@@ -80,12 +80,11 @@ RUN set -x && \
     rm /etc/ldap.conf && \
     ln -s /etc/hostetc/ldap.conf /etc/ldap.conf && \
     ln -s /etc/hostetc/nsswitch.conf  /etc/nsswitch.conf && \
-    touch /usr/local/etc/afpconf/afp.conf && \
-    ln -s /usr/local/etc/afpconf/afp.conf /usr/local/etc/afp.conf && \
+    touch /etc/hostetc/afp.conf && \
+    ln -s /etc/hostetc/afp.conf /usr/local/etc/afp.conf && \
     mkdir /Volumes && \
     NETATALK_VERSION="3.1.8" && \
     cd /netatalk && \
-    wget --no-check-certificate https://sourceforge.net/projects/netatalk/files/netatalk/$NETATALK_VERSION/netatalk-$NETATALK_VERSION.tar.gz && \
     tar -xvf netatalk-$NETATALK_VERSION.tar.gz && \
     cd netatalk-$NETATALK_VERSION && \
     ./configure \
@@ -103,4 +102,4 @@ RUN set -x && \
 
 EXPOSE 548 636 5353/udp
 
-CMD ["/usr/local/sbin/afpd", "-d"]
+CMD ["/usr/local/sbin/netatalk", "-d"]
