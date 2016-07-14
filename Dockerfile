@@ -4,7 +4,8 @@ MAINTAINER ExPrime <executorj@gmail.com>
 RUN apt-get update && \
     apt-get install -qq \
       git \
-      ldap-auth-client \
+      libnss-ldap \
+      libpam-ldap \
       build-essential \
       libevent-dev \
       libssl-dev \
