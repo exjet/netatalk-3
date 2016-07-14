@@ -78,7 +78,7 @@ RUN set -x && \
     mkdir /Volumes && \
     NETATALK_VERSION="3.1.8" && \
     cd /netatalk && \
-    wget https://sourceforge.net/projects/netatalk/files/netatalk/$NETATALK_VERSION/netatalk-$NETATALK_VERSION.tar.gz && \
+    wget --no-check-certificate https://sourceforge.net/projects/netatalk/files/netatalk/$NETATALK_VERSION/netatalk-$NETATALK_VERSION.tar.gz && \
     tar -xvf netatalk-$NETATALK_VERSION.tar.gz && \
     cd netatalk-$NETATALK_VERSION && \
     ./configure \
