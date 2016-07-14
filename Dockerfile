@@ -1,11 +1,51 @@
 FROM ubuntu:16.04
 MAINTAINER ExPrime <executorj@gmail.com>
 
-RUN apt-get update && \
-    apt-get install -qq \
+RUN set -x && \
+     DEBIAN_FRONTEND="noninteractive" && \
+    echo -e " \
+    ldap-auth-config    ldap-auth-config/binddn    string    cn=proxyuser,dc=yourdomain,dc=com \n\
+    ldap-auth-config    ldap-auth-config/bindpw    password \n    \
+    ldap-auth-config    ldap-auth-config/dblogin    boolean    false \n\
+    ldap-auth-config    ldap-auth-config/dbrootlogin    boolean    true \n\
+    ldap-auth-config    ldap-auth-config/ldapns/base-dn    string    dc=yourdomain,dc=com \n\
+    ldap-auth-config    ldap-auth-config/ldapns/ldap-server    string    ldap://10.10.10.10/ \n\
+    ldap-auth-config    ldap-auth-config/ldapns/ldap_version    select    3 \n\
+    ldap-auth-config    ldap-auth-config/move-to-debconf    boolean    true \n\
+    ldap-auth-config    ldap-auth-config/override    boolean    true \n\
+    ldap-auth-config    ldap-auth-config/pam_password    select    crypt \n\
+    ldap-auth-config    ldap-auth-config/rootbinddn    string    cn=manager,dc=yourdomain,dc=com \n\
+    ldap-auth-config    ldap-auth-config/rootbindpw    password    \n\
+    libnss-ldap    libnss-ldap/binddn    string    cn=proxyuser,dc=yourdomain,dc=com \n\
+    libnss-ldap    libnss-ldap/bindpw    password    \n\
+    libnss-ldap    libnss-ldap/confperm    boolean    false \n\
+    libnss-ldap    libnss-ldap/dblogin    boolean    false \n\
+    libnss-ldap    libnss-ldap/dbrootlogin    boolean    true \n\
+    libnss-ldap    libnss-ldap/nsswitch    note    \n\
+    libnss-ldap    libnss-ldap/override    boolean    true \n\
+    libnss-ldap    libnss-ldap/rootbinddn    string    cn=manager,dc=yourdomain,dc=com \n\
+    libnss-ldap    libnss-ldap/rootbindpw    password    \n\
+    libnss-ldap    shared/ldapns/base-dn    string    dc=yourdomain,dc=com \n\
+    libnss-ldap    shared/ldapns/ldap-server    string    ldap://10.10.10.10/ \n\
+    libnss-ldap    shared/ldapns/ldap_version    select    3 \n\
+    libpam-ldap    libpam-ldap/binddn    string    cn=proxyuser,dc=yourdomain,dc=com \n\
+    libpam-ldap    libpam-ldap/bindpw    password    \n\
+    libpam-ldap    libpam-ldap/dblogin    boolean    false \n\
+    libpam-ldap    libpam-ldap/dbrootlogin    boolean    false \n\
+    libpam-ldap    libpam-ldap/override    boolean    true \n\
+    libpam-ldap    libpam-ldap/pam_password    select    crypt \n\
+    libpam-ldap    libpam-ldap/rootbinddn    string    cn=manager,dc=yourdomain,dc=com \n\
+    libpam-ldap    libpam-ldap/rootbindpw    password    \n\
+    libpam-ldap    shared/ldapns/base-dn    string    dc=yourdomain,dc=com \n\
+    libpam-ldap    shared/ldapns/ldap-server    string    ldap://10.10.10.10/ \n\
+    libpam-ldap    shared/ldapns/ldap_version    select    3 \n\
+    libpam-runtime    libpam-runtime/profiles    multiselect    unix, ldap \n\
+    " | debconf-set-selections && \
+    apt-get update && \
+    apt-get --quiet --yes install -qq --no-install-recommends \
       git \
-      libnss-ldap \
       libpam-ldap \
+      libnss-ldap \
       build-essential \
       libevent-dev \
       libssl-dev \
@@ -30,7 +70,7 @@ RUN apt-get update && \
       libtracker-miner-1.0-dev \
       wget \
       checkinstall && \ 
-      apt clean && \
+      apt-get clean && \
     mkdir -p /netatalk && \
     mkdir -p /usr/local/etc/afpconf && \
     touch /usr/local/etc/afpconf/afp.conf && \
