@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 MAINTAINER ExPrime <executorj@gmail.com>
-COPY netatalk-3.1.8.tar.gz /netatalk/
+COPY netatalk-3.1.9.tar.gz /netatalk/
 RUN set -x && \
      DEBIAN_FRONTEND="noninteractive" && \
     echo -e " \
@@ -83,7 +83,7 @@ RUN set -x && \
     touch /etc/hostetc/afp.conf && \
     ln -s /etc/hostetc/afp.conf /usr/local/etc/afp.conf && \
     mkdir /Volumes && \
-    NETATALK_VERSION="3.1.8" && \
+    NETATALK_VERSION="3.1.9" && \
     cd /netatalk && \
     tar -xvf netatalk-$NETATALK_VERSION.tar.gz && \
     cd netatalk-$NETATALK_VERSION && \
