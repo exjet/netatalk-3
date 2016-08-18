@@ -70,8 +70,10 @@ RUN set -x && \
       libglib2.0-dev \
       tracker \
       libgpg-error0:i386 \
-      libfuse2 \
+      libfuse2:i386 \
       libc6:i386 \
+      libncurses5:i386 \
+      libreadline5:i386 \
       libtracker-sparql-1.0-dev \
       libtracker-miner-1.0-dev \
       wget \
