@@ -68,8 +68,9 @@ RUN set -x && \
       libdbus-glib-1-dev \
       libglib2.0-dev \
       tracker \
-      libgpg-error0 \
+      libgpg-error0:i386 \
       libfuse2 \
+      libc6:i386  \
       libtracker-sparql-1.0-dev \
       libtracker-miner-1.0-dev \
       wget \
