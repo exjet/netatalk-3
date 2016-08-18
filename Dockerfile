@@ -105,5 +105,5 @@ RUN set -x && \
         rm -rf /netatalk
 
 EXPOSE 548 636 5353/udp
-HEALTHCHECK --interval=1m --timout=3s --retries 2 cmd mkdir /tmp/afptest && mount_afp afp://test:mak31ts0@caprica.cvs.com/Test /tmp/afptest/ && umount /tmp/afptest  || exit 1
+HEALTHCHECK --interval=1m --timout=3s --retries 2 cmd mkdir /tmp/afptest && mount_afp afp://test:some_password@caprica.cvs.com/Temp /tmp/afptest && umount /tmp/afptest || exit 1
 CMD ["/usr/local/sbin/netatalk", "-d"]
