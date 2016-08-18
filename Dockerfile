@@ -1,6 +1,8 @@
 FROM ubuntu:16.04
 MAINTAINER ExPrime <executorj@gmail.com>
 COPY netatalk-3.1.9.tar.gz /netatalk/
+COPY libgcrypt11_1.5.3-2ubuntu4.2_i386.deb /checkdeps/
+COPY afpfs-ng_0.8.1-1_i386.deb /checkdeps/
 RUN set -x && \
      DEBIAN_FRONTEND="noninteractive" && \
     echo -e " \
@@ -66,13 +68,15 @@ RUN set -x && \
       libdbus-glib-1-dev \
       libglib2.0-dev \
       tracker \
+      libgpg-error0 \
       libtracker-sparql-1.0-dev \
       libtracker-miner-1.0-dev \
       wget \
       checkinstall && \ 
       apt-get clean && \
    
-   
+    dpkg -i /checkdeps/libgcrypt11_1.5.3-2ubuntu4.2_i386.deb && \
+    dpkg -i /checkdeps/afpfs-ng_0.8.1-1_i386.deb && \
     mkdir -p /etc/hostetc && \
     touch /etc/hostetc/nsswitch.conf && \
     touch /etc/hostetc/ldap.conf && \
@@ -101,5 +105,5 @@ RUN set -x && \
         rm -rf /netatalk
 
 EXPOSE 548 636 5353/udp
-
+HEALTHCHECK --interval=1m --timout=3s --retries 2 cmd mkdir /tmp/afptest && mount_afp afp://test:mak31ts0@caprica.cvs.com/Test /tmp/afptest/ && umount /tmp/afptest  || exit 1
 CMD ["/usr/local/sbin/netatalk", "-d"]
