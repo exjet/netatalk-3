@@ -74,7 +74,7 @@ RUN set -x && \
       wget \
       checkinstall && \ 
       apt-get clean && \
-   
+    dpkg --add-architecture i386 && \
     dpkg -i /checkdeps/libgcrypt11_1.5.3-2ubuntu4.2_i386.deb && \
     dpkg -i /checkdeps/afpfs-ng_0.8.1-1_i386.deb && \
     mkdir -p /etc/hostetc && \
@@ -105,5 +105,5 @@ RUN set -x && \
         rm -rf /netatalk
 
 EXPOSE 548 636 5353/udp
-HEALTHCHECK --interval=1m --timout=3s --retries 2 cmd mkdir /tmp/afptest && mount_afp afp://test:some_password@caprica.cvs.com/Temp /tmp/afptest && umount /tmp/afptest || exit 1
+HEALTHCHECK --interval=1m --timout=3s --retries 2 cmd mkdir /tmp/afptest && mount_afp afp://testuser:some_password@localhost/Test_Share /tmp/afptest && umount /tmp/afptest || exit 1
 CMD ["/usr/local/sbin/netatalk", "-d"]
