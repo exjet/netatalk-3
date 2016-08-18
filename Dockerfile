@@ -43,6 +43,7 @@ RUN set -x && \
     libpam-ldap    shared/ldapns/ldap_version    select    3 \n\
     libpam-runtime    libpam-runtime/profiles    multiselect    unix, ldap \n\
     " | debconf-set-selections && \
+    dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get --quiet --yes install -qq --no-install-recommends \
       git \
@@ -70,7 +71,7 @@ RUN set -x && \
       tracker \
       libgpg-error0:i386 \
       libfuse2 \
-      libc6:i386  \
+      libc6:i386 \
       libtracker-sparql-1.0-dev \
       libtracker-miner-1.0-dev \
       wget \
@@ -102,8 +103,7 @@ RUN set -x && \
         make && \
         make install && \
         rm -rf /netatalk
-RUN dpkg --add-architecture i386 && \
-    dpkg -i /checkdeps/libgcrypt11_1.5.3-2ubuntu4.2_i386.deb && \
+RUN dpkg -i /checkdeps/libgcrypt11_1.5.3-2ubuntu4.2_i386.deb && \
     dpkg -i /checkdeps/afpfs-ng_0.8.1-1_i386.deb
 
 EXPOSE 548 636 5353/udp
