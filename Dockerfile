@@ -109,5 +109,5 @@ RUN dpkg -i /checkdeps/libgcrypt11_1.5.3-2ubuntu4.2_i386.deb && \
     dpkg -i /checkdeps/afpfs-ng_0.8.1-1_i386.deb && \
     chmod 666 /dev/fuse
 EXPOSE 548 636 5353/udp
-HEALTHCHECK --interval=1m --timeout=5s --retries=2 cmd mkdir -p /tmp/afptest && mount_afp afp://testuser:some_password@localhost/Test_Share /tmp/afptest && umount /tmp/afptest
+HEALTHCHECK --interval=1m --timeout=10s --retries=2 cmd mkdir -p /tmp/afptest && mount_afp afp://testuser:some_password@localhost/Test_Share /tmp/afptest && umount /tmp/afptest
 CMD ["/usr/local/sbin/netatalk", "-d"]
