@@ -4,7 +4,7 @@ COPY netatalk-3.1.9.tar.gz /netatalk/
 COPY libgcrypt11_1.5.3-2ubuntu4.2_i386.deb /checkdeps/
 COPY afpfs-ng_0.8.1-1_i386.deb /checkdeps/
 COPY healthcheck.sh /health/
-COPY netatalk.service /etc/systemd/system/netatalk.service
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN set -x && \
      DEBIAN_FRONTEND="noninteractive" && \
     echo -e " \
@@ -79,6 +79,7 @@ RUN set -x && \
       libtracker-sparql-1.0-dev \
       libtracker-miner-1.0-dev \
       wget \
+      supervisor \
       checkinstall && \ 
       apt-get clean && \
     mkdir -p /etc/hostetc && \
@@ -112,4 +113,4 @@ RUN dpkg -i /checkdeps/libgcrypt11_1.5.3-2ubuntu4.2_i386.deb && \
     chmod 666 /dev/fuse
 EXPOSE 548 636 5353/udp
 HEALTHCHECK --interval=1m --timeout=15s --retries=2 cmd /health/healthcheck.sh
-CMD ["/bin/systemctl", "restart", "netatalk.service"]
+CMD ["/usr/bin/supervisord"]
