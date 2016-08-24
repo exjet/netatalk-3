@@ -112,4 +112,4 @@ RUN dpkg -i /checkdeps/libgcrypt11_1.5.3-2ubuntu4.2_i386.deb && \
     chmod 666 /dev/fuse
 EXPOSE 548 636 5353/udp
 HEALTHCHECK --interval=1m --timeout=15s --retries=2 cmd /health/healthcheck.sh
-CMD ["/bin/systemctl", "restart netatalk.service"]
+CMD ["/bin/systemctl", "restart", "netatalk.service"]
